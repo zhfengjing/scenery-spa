@@ -1,0 +1,121 @@
+{
+  "compilerOptions": {
+    // 基本选项
+    "target": "ES2020",//指定 ECMAScript 目标版本为 ES2020 (推荐，适用于现代前端项目)，控制 JavaScript 语法被编译成什么版本
+    "module": "ESNext",//控制 TypeScript 编译后生成的 JavaScript 代码使用什么模块系统。 "ESNext" - 生成符合最新 ECMAScript 标准的模块代码 (推荐，适用于现代前端项目)，控制 import/export 被编译成什么格式
+    "lib": [//指定要包含在编译中的库文件
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "jsx": "react-jsx",//使用 React 17+ 的新 JSX 转换
+     //  模块解析选项
+    "moduleResolution": "node",//告诉 TypeScript  如何去查找模块的声明文件。"node" 策略 (推荐，最常用)
+    "resolveJsonModule": true,//允许导入 JSON 文件作为模块
+    "baseUrl": "./",//用于解析非相对模块名称的基准目录
+    "paths": {//paths 只在 moduleResolution: "node" 时有效。
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@services/*": ["./src/services/*"],
+      "@abis/*": ["./src/abis/*"],
+      "@/*": ["./src/*"]
+    },
+    "typeRoots": [//指定类型声明文件的根目录
+      "./node_modules/@types",
+      "./src/types"
+    ],
+    "types": ["jest", "node"],//指定要包含在编译中的类型声明包
+    
+    /* 输出选项 */
+    // "declaration": true,//生成对应的 .d.ts 类型声明文件
+    // "declarationMap": true,//生成对应的 .d.ts.map 文件，方便调试类型声明
+    "noEmit": true,//不生成输出文件，通常与 Babel 或 SWC 等工具一起使用
+    // "outDir": "./dist",//指定编译后文件的输出目录，与noEmit：false 一起使用
+    // "rootDir": "./src",//指定输入文件的根目录,与outDir 配合使用
+    // "sourceMap": true,//生成 .map 文件，方便调试, 与 noEmit: false 一起使用
+    // "removeComments": true,  //从输出文件中移除注释, 与 noEmit: false 一起使用
+
+    // 严格类型检查选项
+    "strict": true,                              // 启用所有严格类型检查选项
+    "noImplicitAny": true,                       // 禁止隐式 any 类型
+    "strictNullChecks": true,                    // 严格的 null 检查
+    "strictFunctionTypes": true,                 // 严格的函数类型检查
+    "strictBindCallApply": true,                 // 严格的 bind/call/apply 检查
+    "strictPropertyInitialization": true,        // 严格的类属性初始化检查
+    "noImplicitThis": true,                      // 禁止 this 表达式的隐式 any 类型
+    "alwaysStrict": true,                        // 始终以严格模式解析并为每个源文件生成 "use strict"
+
+     /* 额外检查选项 */
+    "noUnusedLocals": true,//报告未使用的局部变量
+    "noUnusedParameters": true,//报告未使用的函数参数
+    "noFallthroughCasesInSwitch": true,//防止 switch 语句中的贯穿现象
+    "noImplicitReturns": true,//报告函数中可能没有返回值的代码路径
+   
+    // 高级选项
+    "skipLibCheck": true,//跳过库文件的类型检查，提高编译速度
+    "incremental": true,//启用增量编译，提高后续编译速度
+    "allowJs": true,                             // 允许编译 JavaScript 文件
+    "checkJs": false,                            // 报告 JavaScript 文件中的错误
+
+     /* 互操作性约束 */
+    "esModuleInterop": true,//启用对 ES 模块的互操作性支持,与"allowSyntheticDefaultImports": true 配合使用
+    "allowSyntheticDefaultImports": true,//允许从没有默认导出的模块中默认导入。这对于与非 ES 模块系统的兼容性很有用。
+    "forceConsistentCasingInFileNames": true,//确保文件名的大小写一致性
+    "isolatedModules": true,//每个文件作为单独的模块进行编译，适用于与 Babel 或 SWC 等工具一起使用
+  },
+  // "files": [],//单独指定要包含在编译中的文件列表,如果需要显式指定要编译的文件，可以在这里列出它们
+  "include": [//指定要包含在编译中的文件模式
+    "./src/**/*",
+    "./tests/**/*"
+  ],
+  "exclude": [//指定要从编译中排除的文件模式,`exclude` 优先级高于 `include`
+    "node_modules",
+    "dist",                                      // 排除输出目录
+    "build"
+  ]
+}
+
+// module+resolveJsonModule 配置方式：前端 ESNext + node，后端 CommonJS + node 
+
+//  target: 控制语法特性的转译      
+// │  - 箭头函数                      
+// │  - async/await                  
+// │  - class                        
+// │  - 模板字符串                    
+// │  - 解构赋值                      
+// │  - 可选链 ?. 
+
+// module: 控制模块系统的格式      
+// │  - import/export                
+// │  - require/module.exports       
+// │  - define (AMD)   
+
+
+// target = "我的代码要运行在什么环境？"·
+  // ES5 → 旧浏览器
+  // ES2020 → 现代环境
+
+// module = "我的代码用什么模块系统？"
+  // ESNext → 前端（交给构建工具）
+  // CommonJS → Node.js
+
+  // files属性介绍：files - 精确列举（不支持 glob），include - glob 模式匹配（最常用），exclude - 排除文件
+  // 优先级：files > exclude > include，files 中指定的文件一定会被编译，不受 exclude 影响。
+
+// JavaScript 版本对应关系：
+// ES3 (1999)  → 古老版本
+// ES5 (2009)  → IE9+ 支持
+// ES6/ES2015  → 现代 JS 开始（箭头函数、class、Promise等）
+// ES2016      → 新增 ** 运算符、Array.includes
+// ES2017      → async/await、Object.entries
+// ES2018      → 对象展开、异步迭代
+// ES2019      → Array.flat、Object.fromEntries
+// ES2020      → 可选链?.、空值合并??
+// ES2021      → ||=、??=、WeakRef
+// ES2022      → class 私有字段、顶层 await
+// ES2023      → Array.findLast、正则表达式 /d
+// ES2024      → ...
+// ESNext      → 🎯 代表"当前最新 + 即将到来的特性"

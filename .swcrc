@@ -1,0 +1,116 @@
+// .swcrc 配置相对 Babel 更简洁，核心配置主要在 jsc 和 module 两个部分。大多数项目只需要配置 parser 和 transform 即可。
+{
+    "jsc": { //jsc (JavaScript Compiler): JavaScript/TypeScript 编译相关配置
+        "parser": { //jsc.parser - 解析器配置
+            "syntax": "typescript", //指定语法为 TypeScript
+            "tsx": true, //启用对 TSX 语法的支持
+            "decorators": true //启用对装饰器语法的支持
+        },
+        "transform": {
+            "react": {
+                "runtime": "automatic",
+                "development": false, //禁用开发模式相关的转换
+                "useBuiltins": true,
+                "refresh": true //启用 React 刷新功能 React Fast Refresh
+            }
+        },
+        "target": "es2015",
+        "minify": {
+            "compress": {
+                "drop_console": true, //去除console.log
+                "drop_debugger": true, //去除debugger,
+                "unused": true //删除未使用的代码
+            },
+            "mangle": false //不启用变量名混淆
+        }
+    },
+    "module": {
+        "type": "es6",
+        "strict": true,
+        "noInterop": false
+    },
+    "sourceMaps": "inline", //启用源映射生成,内联 source map，方便调试, "inline",true
+    "minify": false // 开发时不压缩
+}
+// 配置优先级:
+// .swcrc 文件
+// webpack/rollup 配置中的 options
+// package.json 中的 swc 字段
+// 命令行参数
+
+// 配置查找优先级：
+// SWC 会按以下顺序查找配置：
+// webpack loader options 中的配置
+// 项目根目录的 .swcrc
+// 项目根目录的 .swcrc.json
+// package.json 中的 "swc" 字段
+// 父目录中的 .swcrc（向上查找）
+// 完整的配置示例
+// {
+//   "jsc": {//jsc (JavaScript Compiler): JavaScript/TypeScript 编译相关配置
+//     "parser": {//jsc.parser - 解析器配置
+//       "syntax": "typescript",//语法类型,指定语法为 TypeScript
+//       "tsx": true,//启用对 TSX 语法的支持
+//       "decorators": true,//启用对装饰器语法的支持(@decorator)
+//       "dynamicImport": true //启用对动态导入语法的支持import() 
+//     },
+//     "transform": {//jsc.transform - 代码转换相关配置
+//       "react": {//jsc.transform.react - React 相关的代码转换配置
+//         "runtime": "automatic",//使用 React17+的自动导入方式，"classic" - 传统模式，需要手动导入 React
+//         "importSource": "react",//指定导入源为 react
+//         "pragma": "React.createElement",//指定 JSX 转换时使用的函数
+//         "pragmaFrag": "React.Fragment",//指定 JSX 片段转换时使用的函数
+//         "throwIfNamespace": true,//在遇到命名空间时抛出错误
+//         "development": false,//禁用开发模式相关的转换
+//         "useBuiltins": true,//启用内置函数的使用
+//         "refresh": true//启用 React 刷新功能 React Fast Refresh
+//       },
+//       "optimizer": {//jsc.transform.optimizer - 代码优化相关配置
+//         "globals": {//jsc.transform.optimizer.globals - 全局变量优化配置
+//           "vars": {//jsc.transform.optimizer.globals.vars - 全局变量映射配置
+//             "__DEV__": "false"//将全局变量 __DEV__ 替换为 false
+//           }
+//         }
+//       },
+//       "legacyDecorator": true,//启用对旧版装饰器语法的支持
+//       "decoratorMetadata": true//启用对装饰器元数据的支持
+//     },
+//     "target": "es2015",//指定编译目标为 ES2015
+//     "loose": false,//是否启动宽松模式的编译，true: 生成更简单、更快的代码，但可能不完全符合规范，false: 严格符合 ECMAScript 规范
+//     "externalHelpers": false,//禁用外部辅助函数的使用，true为使用外部辅助函数，需要 @swc/helpers，类似 Babel 的 @babel/plugin-transform-runtime，减少重复代码。
+//     "keepClassNames": false,//在编译后保留类名
+//     "minify": {//jsc.minify - 代码压缩相关配置
+//       "compress": true,//启用代码压缩
+//       "mangle": true//启用变量名混淆
+//         "format": {
+//                 "comments": false  // 移除注释
+//    }
+//     },
+//     "baseUrl": ".",//基础路径配置
+//     "paths": {//路径映射配置
+//       "@/*": ["src/*"]//将以 @/ 开头的路径映射到 src/ 目录下
+//     }
+//   },
+//   "module": {//module - 模块相关配置
+//     "type": "es6",//module.type - 模块类型配置，"es6" / "commonjs" / "umd" / "amd" / "systemjs"
+//     "strict": false,//module.strict - 启用严格模式
+//     "strictMode": true,//module.strictMode - 启用严格模式
+//     "lazy": false,//module.lazy - 启用懒加载
+//     "noInterop": false//module.noInterop - 禁用模块间的互操作性
+//   },
+//   "minify": false,//是否启用整体代码压缩，// 是否压缩代码，true: 启用代码压缩，false: 不启用代码压缩
+//   "env": {//env - 环境相关配置（Polyfill）
+//     "targets": {//env.targets - 目标环境配置
+//       "chrome": "79",//指定目标环境为 Chrome 79
+//       "ie": "11"//指定目标环境为 IE 11
+//     },
+//     "mode": "usage",//env.mode - 环境模式配置，"usage" | "entry" | false，"usage": 按需引入 polyfill（推荐），"entry": 在入口引入全部 polyfill，false: 不引入 polyfill
+//     "coreJs": "3.22"//env.coreJs - CoreJS 版本配置
+//   },
+//   "sourceMaps": true,//启用源映射生成
+//   "inlineSourcesContent": true,//启用内联源内容，将源码内容内联到 source map
+//   "exclude": [//排除特定文件或目录不进行编译
+//     "node_modules",
+//     "**/*.spec.ts"
+//   ]
+// }

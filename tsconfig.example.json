@@ -1,0 +1,122 @@
+{
+  // TypeScript 编译器配置文件
+  "compilerOptions": {
+    /* 基础选项 */
+    "target": "ES2020",                          // 编译目标 JavaScript 版本
+    "module": "ESNext",                          // 模块系统
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],   // 编译时包含的库文件
+    "jsx": "react-jsx",                          // JSX 编译模式
+    
+    /* 模块解析选项 */
+    "moduleResolution": "node",                  // 模块解析策略
+    "baseUrl": "./",                             // 模块解析的基础路径
+    "paths": {                                   // 路径映射（路径别名）
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@utils/*": ["src/utils/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@types/*": ["src/types/*"]
+    },
+    "resolveJsonModule": true,                   // 允许导入 JSON 文件
+    "typeRoots": ["./node_modules/@types"],      // 类型定义文件的根目录
+    "types": ["node", "jest"],                   // 要包含的类型声明
+    
+    /* 输出选项 */
+    "outDir": "./dist",                          // 输出目录
+    "rootDir": "./src",                          // 源文件根目录
+    "declaration": true,                         // 生成 .d.ts 声明文件
+    "declarationMap": true,                      // 为声明文件生成 source map
+    "sourceMap": true,                           // 生成 source map 文件
+    "removeComments": true,                      // 删除注释
+    "noEmit": false,                             // 不生成输出文件（通常构建工具会处理）
+    "importHelpers": true,                       // 从 tslib 导入辅助函数
+    "downlevelIteration": true,                  // 为旧版本提供完整的迭代器支持
+    
+    /* 严格类型检查选项 */
+    "strict": true,                              // 启用所有严格类型检查选项
+    "noImplicitAny": true,                       // 禁止隐式 any 类型
+    "strictNullChecks": true,                    // 严格的 null 检查
+    "strictFunctionTypes": true,                 // 严格的函数类型检查
+    "strictBindCallApply": true,                 // 严格的 bind/call/apply 检查
+    "strictPropertyInitialization": true,        // 严格的类属性初始化检查
+    "noImplicitThis": true,                      // 禁止 this 表达式的隐式 any 类型
+    "alwaysStrict": true,                        // 始终以严格模式解析并为每个源文件生成 "use strict"
+    
+    /* 额外检查选项 */
+    "noUnusedLocals": true,                      // 报告未使用的局部变量
+    "noUnusedParameters": true,                  // 报告未使用的参数
+    "noImplicitReturns": true,                   // 所有代码路径都要有返回值
+    "noFallthroughCasesInSwitch": true,          // 报告 switch 语句的 fallthrough 错误
+    "noUncheckedIndexedAccess": true,            // 索引访问时包含 undefined
+    "noImplicitOverride": true,                  // 确保重写成员有 override 修饰符
+    "noPropertyAccessFromIndexSignature": true,  // 索引签名属性必须用[]访问
+    
+    /* 模块检测 */
+    "allowUnusedLabels": false,                  // 不允许未使用的标签
+    "allowUnreachableCode": false,               // 不允许不可达代码
+    
+    /* 互操作性约束 */
+    "esModuleInterop": true,                     // 启用 ES 模块互操作性
+    "allowSyntheticDefaultImports": true,        // 允许从没有默认导出的模块中默认导入
+    "forceConsistentCasingInFileNames": true,    // 强制文件名大小写一致
+    "isolatedModules": true,                     // 每个文件作为单独模块（Babel 兼容）
+    "preserveSymlinks": true,                    // 不解析符号链接的真实路径
+    
+    /* 实验性功能 */
+    "experimentalDecorators": true,              // 启用装饰器
+    "emitDecoratorMetadata": true,               // 为装饰器提供元数据支持
+    
+    /* 高级选项 */
+    "skipLibCheck": true,                        // 跳过声明文件的类型检查
+    "allowJs": true,                             // 允许编译 JavaScript 文件
+    "checkJs": false,                            // 报告 JavaScript 文件中的错误
+    "maxNodeModuleJsDepth": 1,                   // node_modules 中 JS 文件的最大依赖深度
+    "incremental": true,                         // 启用增量编译
+    "tsBuildInfoFile": "./buildcache/.tsbuildinfo" // 增量编译信息文件位置
+  },
+  
+  /* 包含/排除选项 */
+  "include": [
+    "src/**/*",                                  // 包含 src 目录下所有文件
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",                              // 排除 node_modules
+    "dist",                                      // 排除输出目录
+    "build",
+    "**/*.spec.ts",                              // 排除测试文件
+    "**/*.test.ts",
+    "**/*.spec.tsx",
+    "**/*.test.tsx"
+  ],
+  
+  /* 文件引用 */
+  "files": [
+    // 如果需要显式指定要编译的文件，可以在这里列出
+    // "src/index.ts"
+  ],
+  
+  /* 项目引用（用于大型项目） */
+  "references": [
+    // { "path": "./packages/core" },
+    // { "path": "./packages/utils" }
+  ],
+  
+  /* TypeScript 4.0+ 选项 */
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"                       // ts-node 使用 CommonJS
+    }
+  },
+  
+  /* Watch 选项 */
+  "watchOptions": {
+    "watchFile": "useFsEvents",                  // 使用文件系统事件
+    "watchDirectory": "useFsEvents",
+    "fallbackPolling": "dynamicPriority",
+    "synchronousWatchDirectory": true,
+    "excludeDirectories": ["**/node_modules", "dist"]
+  }
+}
