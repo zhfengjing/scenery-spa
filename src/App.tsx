@@ -1,10 +1,11 @@
-import * as React from 'react';
+import type * as React from 'react';
 
 interface IAppProps {
+  appName?: string;
 }
 
-const App: React.FunctionComponent<IAppProps> = () => {
-  return <div>App Root Component</div>;
+const App: React.FunctionComponent<IAppProps> = ({ appName }) => {
+  return <div>{appName ? appName : "App Root Component"}</div>;
 };
 
 export default App;

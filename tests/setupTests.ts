@@ -1,21 +1,6 @@
 import '@testing-library/jest-dom';//导入 jest-dom 扩展匹配器
 
-// const { Builder } = require('selenium-webdriver');
 
-// // 声明一个全局变量来存储驱动实例
-// let driver:any;
-
-// beforeAll(async () => {
-//   // 初始化驱动（在整个测试文件开始前只运行一次）
-//   driver = await new Builder().forBrowser('chrome').build();
-// });
-
-// 将驱动实例暴露给测试文件
-declare global {
-  var driver: any;
-}
-// assign the driver to the global variable so tests can access it
-global.driver = driver;
 // Mock 全局对象
 // Mock window.matchMedia（响应式测试需要）
 Object.defineProperty(window, 'matchMedia', {

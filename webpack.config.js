@@ -1,7 +1,5 @@
-const test = require('node:test');
-const { resolve } = require('path');
+const { resolve } = require('node:path');
 const { merge } = require('webpack-merge');
-const { resourceLimits } = require('worker_threads');
 // const webpackDevConfig = require('./config/webpack.development.js');
 // const webpackProdConfig = require('./config/webpack.production.js');
 const args = require('yargs-parser')(process.argv.slice(2));
