@@ -25,6 +25,8 @@ module.exports = {
         new CleanWebpackPlugin(),//每次构建前清理 /dist 文件夹
         new MiniCssExtractPlugin({//单独打包css文件
             filename: 'styles/[name].[contenthash:8].css',
+            chunkFilename: 'styles/[name].[contenthash:8].css',
+            ignoreOrder: false,
         }),
         new HtmlWebpackPlugin({//生成html文件，并自动引入打包输出的资源
             filename: 'index.prod.html',

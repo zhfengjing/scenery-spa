@@ -3,14 +3,20 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --mode development",
+    "start": "scripty",
     "build": "webpack --config ./webpack.config.js --mode development",
     "build:prod": "webpack --config ./webpack.config.js --mode production",
     "test": "jest tests/unit --collectCoverage",
     "test-coverage": "jest --collectCoverage",
     "test:e2e": "cypress open",
     "test:e2e-selenium": "node tests/e2e/google.spec.js",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "check": "biome check .",
+    "check:fix": "biome check --write ."
   },
   "keywords": [],
   "author": "",
@@ -18,9 +24,11 @@
   "description": "",
   "dependencies": {
     "immer": "^11.0.1",
+    "jotai": "^2.15.2",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
-    "react-router-dom": "^7.10.0"
+    "react-router-dom": "^7.10.0",
+    "scripty": "^3.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.8",
@@ -53,6 +61,7 @@
     "swc-loader": "^0.2.6",
     "tailwindcss": "^4.1.17",
     "terser-webpack-plugin": "^5.3.15",
+    "themed-progress-plugin": "^1.0.1",
     "ts-loader": "^9.5.4",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",

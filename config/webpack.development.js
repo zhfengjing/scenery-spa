@@ -1,5 +1,6 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { resolve } = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { ThemedProgressPlugin } = require("themed-progress-plugin");//主题类型的进度条插件
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
@@ -19,7 +20,7 @@ module.exports = {
             favicon: './public/favicon.ico',
             template: resolve(__dirname, '../public/index.html'),
         }),
-
+        new ThemedProgressPlugin({ theme: 'monochrome' }),
         //  new BundleAnalyzerPlugin({
         //     analyzerMode: 'server',        // 默认值，启动 HTTP 服务器,'static', // 生成静态 HTML 文件,'disabled' // 不启动分析器
         //     analyzerHost: '127.0.0.1',     // 服务器地址
