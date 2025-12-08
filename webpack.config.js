@@ -22,6 +22,26 @@ const webpackBaseConfig = {
             "@utils": resolve(__dirname, 'src/utils'),
             "@pages": resolve(__dirname, 'src/pages'),
             "@abis": resolve(__dirname, 'src/abis'),
+            // 修复 @noble/hashes 导入路径问题
+            '@noble/hashes/sha256': require.resolve('@noble/hashes/sha256'),
+            '@noble/hashes/sha512': require.resolve('@noble/hashes/sha512'),
+            '@noble/hashes/utils': require.resolve('@noble/hashes/utils'),
+            // 修复 React Native 依赖问题
+            '@react-native-async-storage/async-storage': false,
+        },
+        fallback: {
+            "path": false,
+            "os": false,
+            "crypto": false,
+            "stream": false,
+            "http": false,
+            "https": false,
+            "zlib": false,
+            "url": false,
+            "buffer": false,
+            "util": false,
+            "assert": false,
+            "fs": false,
         }
     },
     module: {

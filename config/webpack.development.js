@@ -1,10 +1,21 @@
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { ThemedProgressPlugin } = require("themed-progress-plugin");//主题类型的进度条插件
+const { ThemedProgressPlugin } = require("themed-progress-plugin");
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const webpack = require('webpack');
+const dotenv = require('dotenv');
 
+// 加载环境变量
+const env = dotenv.config().parsed || {};
+console.log('env=',env);
+// 将环境变量转换为 webpack DefinePlugin 可以使用的格式
+const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next]);
+    return prev;
+}, {});
+console.log('envKeys:',envKeys);
 module.exports = {
-    mode:'development',
+    mode: 'development',
     devServer: {
         port: 3001,
         open: true,
@@ -13,6 +24,12 @@ module.exports = {
         static: {
             directory: resolve(__dirname, '../public'),
         },
+        proxy: [
+            {
+                context: ['/api'],
+                target: 'http://localhost:5001',
+            }
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -21,8 +38,9 @@ module.exports = {
             template: resolve(__dirname, '../public/index.html'),
         }),
         new ThemedProgressPlugin({ theme: 'monochrome' }),
+        new webpack.DefinePlugin(envKeys),
         //  new BundleAnalyzerPlugin({
-        //     analyzerMode: 'server',        // 默认值，启动 HTTP 服务器,'static', // 生成静态 HTML 文件,'disabled' // 不启动分析器
+        //     analyzerMode: 'server',        // 默认值，启动 HTTP 服务器,'static', // 生成静态 HTML 文件,'disabled' //
         //     analyzerHost: '127.0.0.1',     // 服务器地址
         //     analyzerPort: 8888,             // 端口号
         //     openAnalyzer: true,             // ✅ 自动打开浏览器
