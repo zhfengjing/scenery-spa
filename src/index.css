@@ -1,5 +1,8 @@
 /* v4 的引入方式 */
 @import 'tailwindcss';
+/* 从这里导入rainbow css 弹窗样式可以正常生效 */
+@import "@rainbow-me/rainbowkit/styles.css";
+
 /* v3的引入方式 */
 /* @tailwind base;
 @tailwind components;

@@ -1,19 +1,19 @@
 const { resolve } = require('node:path');
 const { merge } = require('webpack-merge');
-// const webpackDevConfig = require('./config/webpack.development.js');
-// const webpackProdConfig = require('./config/webpack.production.js');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const args = require('yargs-parser')(process.argv.slice(2));
 const mode = args.mode || 'development';
 const webpackMergeConfig = require(`./config/webpack.${mode}.js`);
 
+// const isProd = mode === 'production' ? true :false;
 console.log('Build mode:', args);
-console.log(process.argv );
+console.log(process.argv);
 console.log(webpackMergeConfig);
 
 const webpackBaseConfig = {
     entry: './src/main.tsx',
     resolve: {
-        extensions: ['.ts', '.tsx', '.js'],
+        extensions: ['.ts', '.tsx', '.js', '.css'],
         alias: {
             '@': resolve(__dirname, 'src'),
             "@hooks": resolve(__dirname, 'src/hooks'),
@@ -71,6 +71,14 @@ const webpackBaseConfig = {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader', 'postcss-loader'],
             },
+            // {
+            //     test: /\.css$/,
+            //     use: [
+            //         MiniCssExtractPlugin.loader,//如果这里用了MiniCssExtractPlugin插件，必须要在plugins中注册才行，否则会报错
+            //         { loader: "css-loader", options: { importLoaders: 1 } },
+            //         "postcss-loader",
+            //     ],
+            // },
             {
                 test: /\.(png|jpg|jpeg|gif|svg)$/i,
                 // webpack4使用file-loader或url-loader,options 使用limit设置8kb阈值,name设置输出文件名和路径：options: {limit: 8192,name: 'static/images/[name].[hash].[ext]'}
@@ -87,7 +95,7 @@ const webpackBaseConfig = {
                     // filename: 'static/images/[name].[hash][ext]'//   - `[name]` - 原始文件名
                     // 输出: static/images/logo.a1b2c3d4.png
 
-                     // [contenthash] - 基于内容的 hash（更精确）
+                    // [contenthash] - 基于内容的 hash（更精确）
                     filename: 'static/images/[name].[contenthash:8][ext]'
                     // // 输出: static/images/logo.a1b2c3d4.png（hash 只取 8 位）
                 },
@@ -99,6 +107,12 @@ const webpackBaseConfig = {
             }
         ],
     },
+    // plugins:[
+    //     new MiniCssExtractPlugin({
+    //         filename: isProd ? 'styles/[name].[contenthash:8].css': "styles/[name].css",
+    //         chunkFilename: isProd ? 'styles/[name].[contenthash:8].css': "styles/[name].css"
+    //     })
+    // ]
 }
 
-module.exports = merge(webpackBaseConfig,webpackMergeConfig)
+module.exports = merge(webpackBaseConfig, webpackMergeConfig)

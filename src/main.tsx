@@ -1,7 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import "@rainbow-me/rainbowkit/styles.css";
+// import "@rainbow-me/rainbowkit/styles.css";//这里导入rainbow样式弹窗样式失效，不知道为什么，从index.css中导入就没问题
 import "./index.css";
 
 const container = document.getElementById("root");
