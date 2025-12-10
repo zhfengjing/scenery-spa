@@ -29,7 +29,7 @@ module.exports = {
             ignoreOrder: false,
         }),
         new HtmlWebpackPlugin({//生成html文件，并自动引入打包输出的资源
-            filename: 'index.prod.html',
+            filename: 'index.html',
             favicon: './public/favicon.ico',
             template: resolve(__dirname, '../public/index.prod.html'),
             // minify: {//压缩html文件
