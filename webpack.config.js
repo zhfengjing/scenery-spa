@@ -9,12 +9,12 @@ const dotenv = require('dotenv');
 
 // 加载环境变量
 const env = dotenv.config().parsed || {};
-console.log('env=',env);
 // 将环境变量转换为 webpack DefinePlugin 可以使用的格式
 const envKeys = Object.keys(env).reduce((prev, next) => {
     prev[`process.env.${next}`] = JSON.stringify(env[next]);
     return prev;
 }, {});
+// console.log('envKeys',envKeys);
 // const isProd = mode === 'production' ? true :false;
 console.log("Build mode:", args);
 console.log(process.argv);
@@ -52,6 +52,7 @@ const webpackBaseConfig = {
 			util: false,
 			assert: false,
 			fs: false,
+            process: require.resolve("process/browser.js")
 		},
 	},
 	module: {
@@ -120,6 +121,10 @@ const webpackBaseConfig = {
 		],
 	},
 	plugins:[
+        // 这一步让 process 全局可用，解决了 process is not defined
+        new webpack.ProvidePlugin({
+        process: 'process/browser.js',
+        }),
         new webpack.DefinePlugin(envKeys),//配置全局环境变量
 	//     new MiniCssExtractPlugin({
 	//         filename: isProd ? 'styles/[name].[contenthash:8].css': "styles/[name].css",

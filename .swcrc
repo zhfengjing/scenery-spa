@@ -17,7 +17,7 @@
         "target": "es2015",
         "minify": {
             "compress": {
-                "drop_console": true, //去除console.log
+                "drop_console": false, //去除console.log
                 "drop_debugger": true, //去除debugger,
                 "unused": true //删除未使用的代码
             },
