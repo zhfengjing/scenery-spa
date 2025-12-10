@@ -52,8 +52,7 @@ module.exports = {
             openAnalyzer: true,             // ✅ 自动打开浏览器
             // generateStatsFile: false,       // 不生成 stats.json
             reportFilename: 'report.html',   // 报告文件名
-            generateStatsFile: true,         //生成stats.json文件
-            statsFilename: 'stats.json'     //stats文件名
+            // statsFilename: 'stats.json'     //stats文件名
         }),//生成打包分析报告
     ],
     optimization: {
