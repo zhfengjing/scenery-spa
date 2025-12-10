@@ -2,6 +2,10 @@
   "name": "scenery-spa",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": ">=20.0.0",
+    "yarn": "1.22.22"
+  },
   "scripts": {
     "start": "scripty",
     "build": "webpack --config ./webpack.config.js --mode development",
