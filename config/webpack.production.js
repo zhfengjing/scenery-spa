@@ -27,7 +27,7 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
     return prev;
 }, {});
 
-console.log('Production environment variables:', envKeys);
+// console.log('Production environment variables:', envKeys);
 
 module.exports = {
     mode: 'production',

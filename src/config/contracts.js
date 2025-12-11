@@ -1149,7 +1149,7 @@ export const COURSE_MANAGER_ABI = [
 ];
 
 export const API_URL = process.env.API_URL;
-console.log('process.env.API_URL:',process.env.API_URL);
-console.log('process.env.YD_TOKEN_ADDRESS:',process.env.YD_TOKEN_ADDRESS);
-console.log('process.env.COURSE_MANAGER_ADDRESS:',process.env.COURSE_MANAGER_ADDRESS);
-console.log('process.env.AAVE_INTEGRATION_ADDRESS:',process.env.AAVE_INTEGRATION_ADDRESS);
+// console.log('process.env.API_URL:',process.env.API_URL);
+// console.log('process.env.YD_TOKEN_ADDRESS:',process.env.YD_TOKEN_ADDRESS);
+// console.log('process.env.COURSE_MANAGER_ADDRESS:',process.env.COURSE_MANAGER_ADDRESS);
+// console.log('process.env.AAVE_INTEGRATION_ADDRESS:',process.env.AAVE_INTEGRATION_ADDRESS);
