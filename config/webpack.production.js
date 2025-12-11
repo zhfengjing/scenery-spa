@@ -4,6 +4,30 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const TerserPlugin = require('terser-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const webpack = require('webpack');
+const dotenv = require('dotenv');
+
+// 加载 .env.production 文件
+const envFile = dotenv.config({ path: resolve(__dirname, '../.env.production') }).parsed || {};
+
+// 合并环境变量：优先使用 process.env（Cloudflare Pages），其次使用 .env.production
+const env = {
+    API_URL: process.env.API_URL || envFile.API_URL,
+    YD_TOKEN_ADDRESS: process.env.YD_TOKEN_ADDRESS || envFile.YD_TOKEN_ADDRESS,
+    COURSE_MANAGER_ADDRESS: process.env.COURSE_MANAGER_ADDRESS || envFile.COURSE_MANAGER_ADDRESS,
+    AAVE_INTEGRATION_ADDRESS: process.env.AAVE_INTEGRATION_ADDRESS || envFile.AAVE_INTEGRATION_ADDRESS,
+    WALLETCONNECT_PROJECT_ID: process.env.WALLETCONNECT_PROJECT_ID || envFile.WALLETCONNECT_PROJECT_ID,
+    CHAIN_ID: process.env.CHAIN_ID || envFile.CHAIN_ID,
+    NETWORK_NAME: process.env.NETWORK_NAME || envFile.NETWORK_NAME,
+};
+
+// 将环境变量转换为 webpack DefinePlugin 格式
+const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next]);
+    return prev;
+}, {});
+
+console.log('Production environment variables:', envKeys);
 
 module.exports = {
     mode: 'production',
@@ -54,6 +78,12 @@ module.exports = {
             reportFilename: 'report.html',   // 报告文件名
             // statsFilename: 'stats.json'     //stats文件名
         }),//生成打包分析报告
+        // 提供 process polyfill，解决浏览器环境中 process is not defined 的问题
+        new webpack.ProvidePlugin({
+            process: 'process/browser.js',
+        }),
+        // 从 .env.production 和 Cloudflare Pages 环境变量注入到代码中
+        new webpack.DefinePlugin(envKeys),
     ],
     optimization: {
         minimize: false,//不启动代码压缩，在swc中已经配置了压缩
